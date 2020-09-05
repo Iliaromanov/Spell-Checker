@@ -46,10 +46,32 @@ bool load(const char *dictionary)
         return false;
     }
     
+    // keep reading strings from the dictionary file until reaching end of file
     while(fscanf(dict, "%s", word) != EOF)
     {
+        // create a node with the
+        node *wordNode = malloc(sizeof(node));
+        if (wordNode != NULL)
+        {
+            strcpy(wordNode->word, word);
+            wordNode->next = NULL;
+        }
+        
         // get the hash key of the word by calling the hash function
         key = hash(word);
+        
+        // if the location at the hash key is empty simply set the hash key to the new word node
+        if (table[key]->word == NULL)
+        {
+            table[key] = wordNode;
+        }
+        // else insert the new node to the start of the linked list at the hash key
+        // WONT WORK GOTTA MAKE INSERT NODE FUNC
+        else
+        {
+            wordNode->next = table[key];
+            table[key] = wordNode;
+        }
     }
     
     return false;
