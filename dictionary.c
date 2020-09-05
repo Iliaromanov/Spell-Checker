@@ -17,7 +17,7 @@ typedef struct node
 node;
 
 // Number of buckets in hash table
-const unsigned int N = 101;
+const unsigned int N = 65536;
 
 // Hash table
 node *table[N];
@@ -29,12 +29,12 @@ int words;
 // Uses chars ASCII value
 unsigned int hash(const char *word)
 {
-    unsigned hashval;
-    for (hashval = 0; *word != '\0'; word++)
+    int index = 0 ;
+    for (int i = 0 ; word[i] != '\0' ; i++)
     {
-        hashval = toupper(*word) + 31 * hashval;
+        index += tolower(word[i]);
     }
-    return hashval % N;
+    return index % N ;
 }
 
 // Returns true if word is in dictionary else false
@@ -99,6 +99,7 @@ bool load(const char *dictionary)
         }
         words++;
     }
+    fclose(dict);
     return true;
 }
 
@@ -111,6 +112,15 @@ unsigned int size(void)
 // Unloads dictionary from memory, returning true if successful else false
 bool unload(void)
 {
-    // TODO
-    return false;
+    for (int i = 0; i < N; i++)
+    {
+        node *tmp = table[i];
+        while (table[i] != NULL)
+        {
+            table[i] = table[i]->next;
+            free(tmp);
+            tmp = table[i];
+        }
+    }
+    return true;
 }
