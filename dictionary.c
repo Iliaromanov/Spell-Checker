@@ -21,6 +21,9 @@ const unsigned int N = 101;
 // Hash table
 node *table[N];
 
+// Word count in dictionary
+int words;
+
 // Returns true if word is in dictionary else false
 bool check(const char *word)
 {
@@ -82,6 +85,7 @@ bool load(const char *dictionary)
             wordNode->next = table[key];
             table[key] = wordNode;
         }
+        words++;
     }
     return true;
 }
@@ -89,8 +93,8 @@ bool load(const char *dictionary)
 // Returns number of words in dictionary if loaded else 0 if not yet loaded
 unsigned int size(void)
 {
-    // TODO
-    return 0;
+    printf("%i\n", words);
+    return words;
 }
 
 // Unloads dictionary from memory, returning true if successful else false
