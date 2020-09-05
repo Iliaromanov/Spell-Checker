@@ -1,5 +1,5 @@
 // Declares a dictionary's functionality
-
+// ensure clang only compiles this file once while it is actually called in two different files
 #ifndef DICTIONARY_H
 #define DICTIONARY_H
 
