@@ -1,5 +1,4 @@
 // Implements a spell-checker
-
 #include <ctype.h>
 #include <stdio.h>
 #include <sys/resource.h>

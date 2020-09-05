@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <strings.h>
 #include <ctype.h>
 
 #include "dictionary.h"
@@ -24,24 +25,35 @@ node *table[N];
 // Word count in dictionary
 int words;
 
-// Returns true if word is in dictionary else false
-bool check(const char *word)
-{
-    // TODO
-    return false;
-}
-
-// Hashes word to a number
+// Hashes word to a number value
 // Uses chars ASCII value
 unsigned int hash(const char *word)
 {
     unsigned hashval;
     for (hashval = 0; *word != '\0'; word++)
     {
-        hashval = *word + 31 * hashval;
+        hashval = toupper(*word) + 31 * hashval;
     }
-    printf("word: %s, hash: %i\n", word, hashval % N);
     return hashval % N;
+}
+
+// Returns true if word is in dictionary else false
+bool check(const char *word)
+{
+    int key = hash(word);
+    
+    //traverse linked list at the hash key location
+    while(table[key] != NULL)
+    {
+        // compare the word to the words in the linked list at the hash key location
+        if (strcasecmp(table[key]->word, word) == 0)
+        {
+            //printf("%s is in dict\n", word);
+            return true;
+        }
+    }
+    //printf("%s NO!\n", word);
+    return false;
 }
 
 // Loads dictionary into memory, returning true if successful else false
@@ -93,7 +105,6 @@ bool load(const char *dictionary)
 // Returns number of words in dictionary if loaded else 0 if not yet loaded
 unsigned int size(void)
 {
-    printf("%i\n", words);
     return words;
 }
 
