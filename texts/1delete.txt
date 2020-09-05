@@ -1,1 +1,2 @@
-This is a very long text that should be deleted in the future, the near future.
+This is a very long text that should be deleted in the near future.
+Very well, this text is now finished.
