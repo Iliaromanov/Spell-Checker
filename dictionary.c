@@ -56,25 +56,27 @@ bool load(const char *dictionary)
             strcpy(wordNode->word, word);
             wordNode->next = NULL;
         }
+        else
+        {
+            return false;
+        }
         
         // get the hash key of the word by calling the hash function
         key = hash(word);
         
         // if the location at the hash key is empty simply set the hash key to the new word node
-        if (table[key]->word == NULL)
+        if (table[key] == NULL)
         {
             table[key] = wordNode;
         }
         // else insert the new node to the start of the linked list at the hash key
-        // WONT WORK GOTTA MAKE INSERT NODE FUNC
         else
         {
             wordNode->next = table[key];
             table[key] = wordNode;
         }
     }
-    
-    return false;
+    return true;
 }
 
 // Returns number of words in dictionary if loaded else 0 if not yet loaded
